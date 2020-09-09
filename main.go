@@ -20,7 +20,7 @@ func main(){
     request := &cita.Request{
         Jsonrpc: "2.0",
         Method: "getBlockByNumber",
-        Params: ["0xF9",true],
+        Params: []interface{}{"0xF9",true},
         Id: 1,
     }
 

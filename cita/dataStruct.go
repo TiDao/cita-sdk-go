@@ -11,14 +11,14 @@ import (
 )
 
 type Request struct {
-	Jsonrpc string   `json:"jsonrpc"`
-	Method  string   `json:"method"`
-	Params  []string `json:"params"`
-	Id      int      `json:"id"`
+	Jsonrpc string        `json:"jsonrpc"`
+	Method  string        `json:"method"`
+	Params  []interface{} `json:"params"`
+	Id      int           `json:"id"`
 }
 
 type Response struct {
-	Id      int          `json:"id"`
+	Id      int             `json:"id"`
 	Jsonrpc string          `json:"jsonrpc"`
 	Result  json.RawMessage `json:"result,omitempty"`
 	Error   Error           `json:"error,omitempty"`
@@ -33,23 +33,23 @@ type ResultPeerCount struct {
 	Result string
 }
 
-type ResultPeerInfo struct{
-    Amount int `json:"amount"`
-    Peers map[string]string `json:"peers"`
-    ErrorMessage string `json:"errorMessage"`
+type ResultPeerInfo struct {
+	Amount       int               `json:"amount"`
+	Peers        map[string]string `json:"peers"`
+	ErrorMessage string            `json:"errorMessage"`
 }
 
-type ResultRawTransaction struct{
-    Hash string `json:"hash"`
-    Status string `json:"status"`
+type ResultRawTransaction struct {
+	Hash   string `json:"hash"`
+	Status string `json:"status"`
 }
 
-type ResultVersion struct{
-    SoftwareVersion string `json:"softwareVersion"`
+type ResultVersion struct {
+	SoftwareVersion string `json:"softwareVersion"`
 }
 
-type ResultBlockByHash struct{
-    Version int `json:"version"`
-    Hash string `json:"hash"`
-    Header 
-}
+//type ResultBlockByHash struct {
+//	Version int    `json:"version"`
+//	Hash    string `json:"hash"`
+//	Header
+//}
