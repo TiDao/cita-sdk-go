@@ -37,7 +37,6 @@ type ParamsBlockByHash struct {
 	Boolen bool
 }
 
-
 //response body type
 type Response struct {
 	Id      int32           `json:"id"`
@@ -54,10 +53,9 @@ type Error struct {
 type ResultBlock struct {
 	Version string `json:"version"`
 	Hash    string `json:"hash"`
-	Header Header `json:"hearder"`
+	Header  Header `json:"hearder"`
 	Body    Body   `json:"header"`
 }
-
 
 type Header struct {
 	Timestamp        time.Duration `json:"timestamp"`
@@ -112,8 +110,6 @@ type ResultLogs struct {
 	TransactionLogIndex string   `json:"transactionLogIndex"`
 }
 
-
-
 type ResultPeerInfo struct {
 	Amount       int32             `json:"amount"`
 	Peers        map[string]string `json:"peers"`
@@ -129,12 +125,26 @@ type ResultVersion struct {
 	SoftwareVersion string `json:"softwareVersion"`
 }
 
-type ResultTransaction struct{
-    Hash string `json:"hash"`
-    Content string `json:"content"`
-    From string `json:"from"`
-    BlockNumber string `json:"blockNumber"`
-    BlockHash string `json:"blockHash"`
-    Index string `json:"index'`
+type ResultTransaction struct {
+	Hash        string `json:"hash"`
+	Content     string `json:"content"`
+	From        string `json:"from"`
+	BlockNumber string `json:"blockNumber"`
+	BlockHash   string `json:"blockHash"`
+	Index       string `json:"index'`
 }
 
+type ResultMetaData struct {
+	ChainId          int16         `json:"chainId"`
+	ChainIdV1        string        `json:"chainIdV1"`
+	ChainName        string        `json:"chainName"`
+	Operator         string        `json:"operator"`
+	GenesisTimestamp time.Duration `json:"genesisTimestamp"`
+	Validators       []string      `json:"validators"`
+	BlockInterval    time.Duration `json:"blockInterval"`
+	TokenName        string        `json:"tokenName"`
+	TokenAvatar      string        `json:"tokenAvatar"`
+	Version          int32         `json:"version"`
+	EconomicalModel  int16         `json:"economicalModel"`
+	Website          string        `json:"website,omitempty"`
+}
