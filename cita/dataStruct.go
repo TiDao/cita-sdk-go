@@ -32,11 +32,6 @@ type CallRequest struct {
 	Data string `json:"data,moitempt"`
 }
 
-type ParamsBlockByHash struct {
-	Data   string
-	Boolen bool
-}
-
 //response body type
 type Response struct {
 	Id      int32           `json:"id"`
