@@ -18,8 +18,6 @@ import (
 func Post(url string, input []byte, output *[]byte) error {
 
 	var client = &http.Client{}
-
-
 	reader := bytes.NewReader(input)
 	request, err := http.NewRequest("POST", url, reader)
 	if err != nil {

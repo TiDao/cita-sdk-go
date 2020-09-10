@@ -11,7 +11,7 @@ import(
     "./HttpMethod"
     "./cita"
     "fmt"
-    "os"
+//    "os"
     "bytes"
 )
 
@@ -19,8 +19,8 @@ func main(){
     url := "http://192.168.1.65:1337"
     request := &cita.Request{
         Jsonrpc: "2.0",
-        Method: "getBlockByNumber",
-        Params: []interface{}{"0xF9",true},
+        Method: "getMetaData",
+        Params: []interface{}{"latest"},
         Id: 1,
     }
 
@@ -39,10 +39,11 @@ func main(){
         fmt.Println(err)
     }
 
-    fmt.Println(response)
+    fmt.Println(string(*responseJson))
 
     var out bytes.Buffer
 
     err = json.Indent(&out,*responseJson,"","\t")
-    out.WriteTo(os.Stdout)
+    fmt.Println(out.String())
+    //out.WriteTo(os.Stdout)
 }
