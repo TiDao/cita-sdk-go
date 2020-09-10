@@ -12,6 +12,7 @@ import (
 )
 
 //requst body type
+//easyjson
 type Request struct {
 	Jsonrpc string        `json:"jsonrpc"`
 	Method  string        `json:"method"`
@@ -19,6 +20,7 @@ type Request struct {
 	Id      int32         `json:"id"`
 }
 
+//easyjson
 type Filter struct {
 	FromBlock string   `json:"fromBlock,omitempty"`
 	ToBlock   string   `json:"toBlock,omitempty"`
@@ -26,6 +28,7 @@ type Filter struct {
 	Topics    []string `json:"topics,omitempty"`
 }
 
+//easyjson
 type CallRequest struct {
 	From string `json:"from,moitempty"`
 	To   string `json:"to"`
@@ -33,6 +36,7 @@ type CallRequest struct {
 }
 
 //response body type
+//easyjson
 type Response struct {
 	Id      int32           `json:"id"`
 	Jsonrpc string          `json:"jsonrpc"`
@@ -40,11 +44,13 @@ type Response struct {
 	Error   Error           `json:"error,omitempty"`
 }
 
+//easyjson
 type Error struct {
 	Code    int32  `json:"code"`
 	Message string `json:"message"`
 }
 
+//easyjson
 type ResultBlock struct {
 	Version string `json:"version"`
 	Hash    string `json:"hash"`
@@ -52,6 +58,7 @@ type ResultBlock struct {
 	Body    Body   `json:"header"`
 }
 
+//easyjson
 type Header struct {
 	Timestamp        time.Duration `json:"timestamp"`
 	PreHash          string        `json:"preHash"`
@@ -64,6 +71,7 @@ type Header struct {
 	Proof            Proof         `json:"proof"`
 }
 
+//easyjson
 type Proof struct {
 	Proposal string            `json:"proposal"`
 	Height   int32             `json:"height"`
@@ -71,15 +79,18 @@ type Proof struct {
 	Commits  map[string]string `json:"commit"`
 }
 
+//easyjson
 type Body struct {
 	Transactions []Transactions `json:"transactions"`
 }
 
+//easyjson
 type Transactions struct {
 	Hash    string `json:"hash"`
 	Content string `json:"content"`
 }
 
+//easyjson
 type ResultTransactionReceipt struct {
 	TransactionHash     string       `json:"transactionHash"`
 	TransactionIndex    string       `json"transactionIndex"`
@@ -93,6 +104,7 @@ type ResultTransactionReceipt struct {
 	LogsBloom           string       `json:"logsBloom"`
 }
 
+//easyjson
 type ResultLogs struct {
 	Address             string   `json:"address"`
 	Topic               []string `json:"topic"`
@@ -105,21 +117,25 @@ type ResultLogs struct {
 	TransactionLogIndex string   `json:"transactionLogIndex"`
 }
 
+//easyjson
 type ResultPeerInfo struct {
 	Amount       int32             `json:"amount"`
 	Peers        map[string]string `json:"peers"`
 	ErrorMessage string            `json:"errorMessage"`
 }
 
+//easyjson
 type ResultRawTransaction struct {
 	Hash   string `json:"hash"`
 	Status string `json:"status"`
 }
 
+//easyjson
 type ResultVersion struct {
 	SoftwareVersion string `json:"softwareVersion"`
 }
 
+//easyjson
 type ResultTransaction struct {
 	Hash        string `json:"hash"`
 	Content     string `json:"content"`
@@ -129,6 +145,7 @@ type ResultTransaction struct {
 	Index       string `json:"index'`
 }
 
+//easyjson
 type ResultMetaData struct {
 	ChainId          int16         `json:"chainId"`
 	ChainIdV1        string        `json:"chainIdV1"`
