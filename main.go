@@ -8,11 +8,11 @@ package main
 
 import(
     "encoding/json"
-    "./HttpMethod"
     "./cita"
     "fmt"
 //    "os"
     "bytes"
+    "log"
 )
 
 func main(){
@@ -30,7 +30,10 @@ func main(){
     }
     responseJson := &[]byte{}
 
-    HttpMethod.Post(url,requestJson,responseJson)
+    *responseJson,err = cita.Post(url,requestJson)
+    if err != nil{
+        log.Fatal(err)
+    }
 
     var response = &cita.Response{}
 

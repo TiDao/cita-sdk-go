@@ -15,14 +15,14 @@ import (
     //"strconv"
 )
 
-func Post(url string, input []byte, output *[]byte) error {
+func Post(url string, input []byte) ([]byte,error) {
 
 	var client = &http.Client{}
 	reader := bytes.NewReader(input)
 	request, err := http.NewRequest("POST", url, reader)
 	if err != nil {
 		log.Println(err.Error())
-		return err
+		return nil,err
 	}
     
 
@@ -35,41 +35,39 @@ func Post(url string, input []byte, output *[]byte) error {
 	response, err := client.Do(request)
 	if err != nil {
 		log.Println(err.Error())
-		return err
+		return nil,err
 	}
 
 	responseBody, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		log.Println(err.Error())
-		return err
+		return nil,err
 	}
 
-	*output = responseBody
-	return nil
+	return responseBody,nil
 }
 
-func Get(url string, output *[]byte) error {
+func Get(url string) ([]byte,error) {
 
 	var client = &http.Client{}
 
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Println(err)
-		return  err
+		return  nil,err
 	}
 
 	reponse, err := client.Do(request)
 	if err != nil {
 		log.Println(err.Error())
-		return err
+		return nil,err
 	}
 
 	reponseBody, err := ioutil.ReadAll(reponse.Body)
     if err != nil{
         log.Println(err.Error())
-        return err
+        return nil,err
     }
 
-	*output = reponseBody
-    return nil
+	return reponseBody,nil
 }
