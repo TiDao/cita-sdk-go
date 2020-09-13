@@ -9,36 +9,44 @@ package cita
 import "testing"
 import "log"
 
-func TestPeerCount(t *testing.T){
+//func TestPeerCount(t *testing.T){
+//
+//    var url = "http://192.168.1.65:1337"
+//    req := &Request{
+//         Jsonrpc: "2.0",
+//         Method: "peerCount",
+//         Params: []interface{}{},
+//         Id: 1,
+//    }
+//
+//    var result =new(string)
+//    err := PeerCount(req,result,url)
+//    if err != nil{
+//        t.Error(err)
+//    }
+//    log.Println(result)
+//}
 
-    var url = "http://192.168.1.65:1337"
-    req := &Request{
-         Jsonrpc: "2.0",
-         Method: "peerCount",
-         Params: []interface{}{},
-         Id: 1,
-    }
+func TestBool(t *testing.T){
+    s1 := make([]byte,0)
+    s1 = nil
+    test := Bool(s1)
 
-    var result =new(string)
-    err := PeerCount(req,result,url)
-    if err != nil{
-        t.Error(err)
-    }
-    log.Println(result)
+    log.Println(test)
 }
 
-func BenchmarkPeerCount(b *testing.B){
-    var url = "http://192.168.1.65:1337"
-    req := &Request{
-         Jsonrpc: "2.0",
-         Method: "peerCount",
-         Params: []interface{}{},
-         Id: 1,
-    }
-
-    var result = new(string)
-    for i:=0;i<b.N;i++{
-        _ = PeerCount(req,result,url) 
-    }
-
-}
+//func BenchmarkPeerCount(b *testing.B){
+//    var url = "http://192.168.1.65:1337"
+//    req := &Request{
+//         Jsonrpc: "2.0",
+//         Method: "peerCount",
+//         Params: []interface{}{},
+//         Id: 1,
+//    }
+//
+//    var result = new(string)
+//    for i:=0;i<b.N;i++{
+//        _ = PeerCount(req,result,url) 
+//    }
+//
+//}

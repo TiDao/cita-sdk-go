@@ -10,8 +10,12 @@ import(
     "unsafe"
 )
 
-func String(b []byte) string{
+func byteToString(b []byte) string{
     return *(*string)(unsafe.Pointer(&b))
+}
+
+func byteToBool(b []byte) bool{
+    return *(*bool)(unsafe.Pointer(&b))
 }
 
 func PeerCount(req *Request,Result *string,url string) error {
@@ -32,13 +36,280 @@ func PeerCount(req *Request,Result *string,url string) error {
         return err
     }
 
-    *Result = String(response.Result)
+    *Result = byteToString(response.Result)
+
+    return nil
+}
+
+func Call(req *Request,Result *string,url string) error {
+
+    reqJson,err := req.MarshalJSON()
+    if err != nil{
+        return err
+    }
+
+    respJson,err := Post(url,reqJson)
+    if err != nil{
+        return err
+    }
+
+    var response = &Response{}
+    err = response.UnmarshalJSON(respJson)
+    if err != nil{
+        return err
+    }
+
+    *Result = byteToString(response.Result)
+
+    return nil
+}
+func BlockNumber(req *Request,Result *string,url string) error {
+
+    reqJson,err := req.MarshalJSON()
+    if err != nil{
+        return err
+    }
+
+    respJson,err := Post(url,reqJson)
+    if err != nil{
+        return err
+    }
+
+    var response = &Response{}
+    err = response.UnmarshalJSON(respJson)
+    if err != nil{
+        return err
+    }
+
+    *Result = byteToString(response.Result)
+
+    return nil
+}
+
+func PeersInfo(req *Request,Result *ResultPeerInfo,url string) error {
+
+    reqJson,err := req.MarshalJSON()
+    if err != nil{
+        return err
+    }
+
+    respJson,err := Post(url,reqJson)
+    if err != nil{
+        return err
+    }
+
+    var response = &Response{}
+    err = response.UnmarshalJSON(respJson)
+    if err != nil{
+        return err
+    }
+
+    err = Result.UnmarshalJSON(response.Result)
+    if err != nil{
+        return err
+    }
 
     return nil
 }
 
 
-func PeersInfo(req *Request,Result *ResultPeerInfo,url string) error {
+func GetVersion(req *Request,Result *ResultVersion,url string) error {
+
+    reqJson,err := req.MarshalJSON()
+    if err != nil{
+        return err
+    }
+
+    respJson,err := Post(url,reqJson)
+    if err != nil{
+        return err
+    }
+
+    var response = &Response{}
+    err = response.UnmarshalJSON(respJson)
+    if err != nil{
+        return err
+    }
+
+    err = Result.UnmarshalJSON(response.Result)
+    if err != nil{
+        return err
+    }
+
+    return nil
+}
+
+func GetBlock(req *Request,Result *ResultBlock,url string) error {
+
+    reqJson,err := req.MarshalJSON()
+    if err != nil{
+        return err
+    }
+
+    respJson,err := Post(url,reqJson)
+    if err != nil{
+        return err
+    }
+
+    var response = &Response{}
+    err = response.UnmarshalJSON(respJson)
+    if err != nil{
+        return err
+    }
+
+    err = Result.UnmarshalJSON(response.Result)
+    if err != nil{
+        return err
+    }
+
+    return nil
+}
+
+func GetLogs(req *Request,Result *[]ResultLogs,url string) error{
+
+    reqJson,err := req.MarshalJSON()
+    if err != nil{
+        return err
+    }
+
+    respJson,err := Post(url,reqJson)
+    if err != nil{
+        return err
+    }
+
+    var response = &Response{}
+    err = response.UnmarshalJSON(respJson)
+    if err != nil{
+        return err
+    }
+
+    err = Result.UnmarshalJSON(response.Result)
+    if err != nil{
+        return err
+    }
+
+    return nil
+}
+
+func GetTransaction(req *Request,Result *ResultTransaction,url string) error{
+
+    reqJson,err := req.MarshalJSON()
+    if err != nil{
+        return err
+    }
+
+    respJson,err := Post(url,reqJson)
+    if err != nil{
+        return err
+    }
+
+    var response = &Response{}
+    err = response.UnmarshalJSON(respJson)
+    if err != nil{
+        return err
+    }
+
+    err = Result.UnmarshalJSON(response.Result)
+    if err != nil{
+        return err
+    }
+
+    return nil
+}
+
+func GetBalance(req *Request,Result *string,url string) error {
+
+    reqJson,err := req.MarshalJSON()
+    if err != nil{
+        return err
+    }
+
+    respJson,err := Post(url,reqJson)
+    if err != nil{
+        return err
+    }
+
+    var response = &Response{}
+    err = response.UnmarshalJSON(respJson)
+    if err != nil{
+        return err
+    }
+
+    *Result = byteToString(response.Result)
+
+    return nil
+}
+
+func NewFilter(req *Request,Result *string,url string) error {
+
+    reqJson,err := req.MarshalJSON()
+    if err != nil{
+        return err
+    }
+
+    respJson,err := Post(url,reqJson)
+    if err != nil{
+        return err
+    }
+
+    var response = &Response{}
+    err = response.UnmarshalJSON(respJson)
+    if err != nil{
+        return err
+    }
+
+    *Result = byteToString(response.Result)
+
+    return nil
+}
+
+func NewBlockFilter(req *Request,Result *string,url string) error {
+
+    reqJson,err := req.MarshalJSON()
+    if err != nil{
+        return err
+    }
+
+    respJson,err := Post(url,reqJson)
+    if err != nil{
+        return err
+    }
+
+    var response = &Response{}
+    err = response.UnmarshalJSON(respJson)
+    if err != nil{
+        return err
+    }
+
+    *Result = byteToString(response.Result)
+
+    return nil
+}
+
+func UninstallFilter(req *Request,Result bool,url string) error {
+
+    reqJson,err := req.MarshalJSON()
+    if err != nil{
+        return err
+    }
+
+    respJson,err := Post(url,reqJson)
+    if err != nil{
+        return err
+    }
+
+    var response = &Response{}
+    err = response.UnmarshalJSON(respJson)
+    if err != nil{
+        return err
+    }
+
+    *Result = byteToBool(response.Result)
+
+    return nil
+}
+
+func GetFilterChanges(req *Request,Result *[]ResultLogs,url string) error{
 
     reqJson,err := req.MarshalJSON()
     if err != nil{
