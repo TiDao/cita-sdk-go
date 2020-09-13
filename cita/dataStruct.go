@@ -11,6 +11,9 @@ import (
 	"time"
 )
 
+
+type Bool bool
+type String string
 //requst body type
 //easyjson
 type Request struct {
@@ -116,6 +119,8 @@ type ResultLogs struct {
 	LogIndex            string   `json:"logIndex"`
 	TransactionLogIndex string   `json:"transactionLogIndex"`
 }
+
+type ResultFilter []string
 
 //easyjson
 type ResultPeerInfo struct {
