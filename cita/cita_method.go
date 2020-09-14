@@ -183,11 +183,18 @@ func GetLogs(req *Request,Result *[]ResultLogs,url string) error{
         return err
     }
 
-    err = Result.UnmarshalJSON(response.Result)
-    if err != nil{
-        return err
-    }
+    //err = Result.UnmarshalJSON(response.Result)
+    //if err != nil{
+    //    return err
+    //}
 
+
+    //for i,results := range response.Result{
+    //    err := (*Result)[i].UnmarshalJSON(results)
+    //    if err != nil{
+    //        return err
+    //    }
+    //}
     return nil
 }
 
@@ -286,7 +293,7 @@ func NewBlockFilter(req *Request,Result *string,url string) error {
     return nil
 }
 
-func UninstallFilter(req *Request,Result bool,url string) error {
+func UninstallFilter(req *Request,Result *bool,url string) error {
 
     reqJson,err := req.MarshalJSON()
     if err != nil{
@@ -309,7 +316,7 @@ func UninstallFilter(req *Request,Result bool,url string) error {
     return nil
 }
 
-func GetFilterChanges(req *Request,Result *ResultFilte,url string) error{
+func GetFilterChanges(req *Request,Result *[]string,url string) error{
 
     reqJson,err := req.MarshalJSON()
     if err != nil{
@@ -329,7 +336,7 @@ func GetFilterChanges(req *Request,Result *ResultFilte,url string) error{
 
     //*Result = byteToString(response.Result)
     for i,results := range response.Result {
-        Result[i] = *(*string)(unsafe.Pointer(&results))
+        (*Result)[i] = *(*string)(unsafe.Pointer(&results))
     }
     return nil
 }
@@ -352,12 +359,12 @@ func GetFilterLogs(req *Request,Result *[]ResultLogs,url string) error{
         return err
     }
 
-    for i,results := range response.Result{
-        err := Result[i].UnmarshalJSON(results)
-        if err != nil{
-            return err
-        }
-    }
+    //for i,results := range response.Result{
+    //    err := (*Result)[i].UnmarshalJSON(results)
+    //    if err != nil{
+    //        return err
+    //    }
+    //}
 
     return nil
 }
@@ -454,7 +461,7 @@ func GetStorageAt(req *Request,Result *string,url string) error {
     return nil
 }
 
-func GetMetaData(req *Request,Result *ResultMataData,url string) error{
+func GetMetaData(req *Request,Result *ResultMetaData,url string) error{
 
     reqJson,err := req.MarshalJSON()
     if err != nil{

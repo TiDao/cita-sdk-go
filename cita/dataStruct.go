@@ -108,6 +108,14 @@ type ResultTransactionReceipt struct {
 }
 
 //easyjson
+type Logs struct {
+	Id      int32           `json:"id"`
+	Jsonrpc string          `json:"jsonrpc"`
+	Result  []ResultLogs    `json:"result,omitempty"`
+	Error   Error           `json:"error,omitempty"`
+}
+
+//easyjson
 type ResultLogs struct {
 	Address             string   `json:"address"`
 	Topic               []string `json:"topic"`
@@ -120,7 +128,6 @@ type ResultLogs struct {
 	TransactionLogIndex string   `json:"transactionLogIndex"`
 }
 
-type ResultFilter []string
 
 //easyjson
 type ResultPeerInfo struct {
