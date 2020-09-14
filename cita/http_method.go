@@ -1,7 +1,7 @@
 /***********************************************************************
 # File Name: http_method.go
 # Author: TiDao
-# mail: songzhaofeng411@gmail.com
+# mail: tidao2049@gmail.com
 # Created Time: 2020-04-20 16:41:52
 *********************************************************************/
 package cita

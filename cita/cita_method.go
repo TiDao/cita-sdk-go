@@ -1,7 +1,7 @@
 /***********************************************************************
 # File Name: cita_method.go
 # Author: TiDao
-# mail: songzhaofeng411@gmail.com
+# mail: tidao2049@gmail.com
 # Created Time: 2020-09-11 13:19:39
 *********************************************************************/
 package cita
@@ -177,7 +177,7 @@ func GetLogs(req *Request,Result *[]ResultLogs,url string) error{
         return err
     }
 
-    var response = &Response{}
+    var response = &Logs{}
     err = response.UnmarshalJSON(respJson)
     if err != nil{
         return err
@@ -187,14 +187,8 @@ func GetLogs(req *Request,Result *[]ResultLogs,url string) error{
     //if err != nil{
     //    return err
     //}
+    *Result = response.Result 
 
-
-    //for i,results := range response.Result{
-    //    err := (*Result)[i].UnmarshalJSON(results)
-    //    if err != nil{
-    //        return err
-    //    }
-    //}
     return nil
 }
 
@@ -353,19 +347,13 @@ func GetFilterLogs(req *Request,Result *[]ResultLogs,url string) error{
         return err
     }
 
-    var response = &Response{}
+    var response = &Logs{}
     err = response.UnmarshalJSON(respJson)
     if err != nil{
         return err
     }
 
-    //for i,results := range response.Result{
-    //    err := (*Result)[i].UnmarshalJSON(results)
-    //    if err != nil{
-    //        return err
-    //    }
-    //}
-
+    *Result = response.Result
     return nil
 }
 
