@@ -84,14 +84,14 @@ type Proof struct {
 
 //easyjson
 type Body struct {
-	Transactions []Transactions `json:"transactions"`
+	Transactions []ResultTransaction `json:"transactions"`
 }
 
 //easyjson
-type Transactions struct {
-	Hash    string `json:"hash"`
-	Content string `json:"content"`
-}
+//type Transactions struct {
+//	Hash    string `json:"hash"`
+//	Content string `json:"content"`
+//}
 
 //easyjson
 type ResultTransactionReceipt struct {
@@ -149,12 +149,12 @@ type ResultVersion struct {
 
 //easyjson
 type ResultTransaction struct {
-	Hash        string `json:"hash"`
-	Content     string `json:"content"`
-	From        string `json:"from"`
-	BlockNumber string `json:"blockNumber"`
-	BlockHash   string `json:"blockHash"`
-	Index       string `json:"index'`
+	Hash        string `json:"hash,omitempty"`
+	Content     string `json:"content,omitempty"`
+	From        string `json:"from,omitempty"`
+	BlockNumber string `json:"blockNumber,omitempty"`
+	BlockHash   string `json:"blockHash,omitempty"`
+	Index       string `json:"index,omitempty'`
 }
 
 //easyjson
