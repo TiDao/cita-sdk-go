@@ -88,10 +88,10 @@ type Body struct {
 }
 
 //easyjson
-//type Transactions struct {
-//	Hash    string `json:"hash"`
-//	Content string `json:"content"`
-//}
+type Transactions struct {
+	Hash    string `json:"hash"`
+	Content string `json:"content"`
+}
 
 //easyjson
 type ResultTransactionReceipt struct {

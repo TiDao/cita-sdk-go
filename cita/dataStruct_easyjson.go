@@ -363,34 +363,60 @@ func easyjson69c461c7EncodeCita3(out *jwriter.Writer, in ResultTransaction) {
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if in.Hash != "" {
 		const prefix string = ",\"hash\":"
+		first = false
 		out.RawString(prefix[1:])
 		out.String(string(in.Hash))
 	}
-	{
+	if in.Content != "" {
 		const prefix string = ",\"content\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Content))
 	}
-	{
+	if in.From != "" {
 		const prefix string = ",\"from\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.From))
 	}
-	{
+	if in.BlockNumber != "" {
 		const prefix string = ",\"blockNumber\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.BlockNumber))
 	}
-	{
+	if in.BlockHash != "" {
 		const prefix string = ",\"blockHash\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.BlockHash))
 	}
 	{
 		const prefix string = ",\"Index\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Index))
 	}
 	out.RawByte('}')
@@ -1930,15 +1956,15 @@ func easyjson69c461c7DecodeCita17(in *jlexer.Lexer, out *Body) {
 				in.Delim('[')
 				if out.Transactions == nil {
 					if !in.IsDelim(']') {
-						out.Transactions = make([]Transactions, 0, 2)
+						out.Transactions = make([]ResultTransaction, 0, 0)
 					} else {
-						out.Transactions = []Transactions{}
+						out.Transactions = []ResultTransaction{}
 					}
 				} else {
 					out.Transactions = (out.Transactions)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v26 Transactions
+					var v26 ResultTransaction
 					(v26).UnmarshalEasyJSON(in)
 					out.Transactions = append(out.Transactions, v26)
 					in.WantComma()
