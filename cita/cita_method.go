@@ -12,6 +12,16 @@ import(
     "errors"
 )
 
+
+type errString struct{
+    prefix string
+    err  error
+}
+
+func (Err *errString)Error() string{
+    return Err.prefix+Err.err.Error()
+}
+
 func byteToString(b []byte) string{
     return *(*string)(unsafe.Pointer(&b))
 }
@@ -142,26 +152,35 @@ func GetVersion(req *Request,Result *ResultVersion,url string) error {
 }
 
 func GetBlock(req *Request,Result *ResultBlock,url string) error {
-
+    
+    Err := &errString{}
     reqJson,err := req.MarshalJSON()
     if err != nil{
-        return errors.New("request error:")
+        Err.prefix = "marshal request json error "
+        Err.err = err
+        return Err
     }
 
     respJson,err := Post(url,reqJson)
     if err != nil{
-        return errors.New("Post request error:")
+        Err.prefix = "Post messages error "
+        Err.err = err
+        return Err
     }
 
     var response = &Response{}
     err = response.UnmarshalJSON(respJson)
     if err != nil{
-        return errors.New("Unmarshal response result error:")
+        Err.prefix = "Unmarshal response  error "
+        Err.err = err
+        return Err
     }
 
     err = Result.UnmarshalJSON(response.Result)
     if err != nil{
-        return err
+        Err.prefix = "Unmarshal response.Result error "
+        Err.err = err
+        return Err
     }
 
     return nil

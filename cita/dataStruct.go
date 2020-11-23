@@ -71,15 +71,20 @@ type Header struct {
 	QuotaUsed        string        `json:"quotaUsed"`
 	number           string        `json:"number"`
 	Proposer         string        `json:"propose"`
-	Proof            Proof         `json:"proof"`
+	Proof            Proof           `json:"proof"`
+}
+
+//easysjon
+type Proof struct{
+    Bft  Bft `json:"Bft,omitempty"`
 }
 
 //easyjson
-type Proof struct {
-	Proposal string            `json:"proposal"`
-	Height   int32             `json:"height"`
-	Round    int32             `json:"round"`
-	Commits  map[string]string `json:"commit"`
+type  Bft struct {
+        Proposal string            `json:"proposal"`
+	    Height   int32             `json:"height"`
+	    Round    int32             `json:"round"`
+	    Commits  map[string]string `json:"commit"`
 }
 
 //easyjson

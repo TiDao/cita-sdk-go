@@ -127,6 +127,7 @@ func TestGetBlock(t *testing.T){
     }
 
     result := new(ResultBlock)
+
     err := GetBlock(req,result,url)
     if err != nil{
         t.Error(err)
