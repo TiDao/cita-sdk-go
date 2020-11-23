@@ -9,7 +9,6 @@ package cita
 
 import(
     "unsafe"
-    "errors"
 )
 
 

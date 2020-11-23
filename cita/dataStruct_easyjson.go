@@ -1283,28 +1283,8 @@ func easyjson69c461c7DecodeCita11(in *jlexer.Lexer, out *Proof) {
 			continue
 		}
 		switch key {
-		case "proposal":
-			out.Proposal = string(in.String())
-		case "height":
-			out.Height = int32(in.Int32())
-		case "round":
-			out.Round = int32(in.Int32())
-		case "commit":
-			if in.IsNull() {
-				in.Skip()
-			} else {
-				in.Delim('{')
-				out.Commits = make(map[string]string)
-				for !in.IsDelim('}') {
-					key := string(in.String())
-					in.WantColon()
-					var v15 string
-					v15 = string(in.String())
-					(out.Commits)[key] = v15
-					in.WantComma()
-				}
-				in.Delim('}')
-			}
+		case "Bft":
+			(out.Bft).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -1319,41 +1299,11 @@ func easyjson69c461c7EncodeCita11(out *jwriter.Writer, in Proof) {
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
-		const prefix string = ",\"proposal\":"
+	if true {
+		const prefix string = ",\"Bft\":"
+		first = false
 		out.RawString(prefix[1:])
-		out.String(string(in.Proposal))
-	}
-	{
-		const prefix string = ",\"height\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.Height))
-	}
-	{
-		const prefix string = ",\"round\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.Round))
-	}
-	{
-		const prefix string = ",\"commit\":"
-		out.RawString(prefix)
-		if in.Commits == nil && (out.Flags&jwriter.NilMapAsEmpty) == 0 {
-			out.RawString(`null`)
-		} else {
-			out.RawByte('{')
-			v16First := true
-			for v16Name, v16Value := range in.Commits {
-				if v16First {
-					v16First = false
-				} else {
-					out.RawByte(',')
-				}
-				out.String(string(v16Name))
-				out.RawByte(':')
-				out.String(string(v16Value))
-			}
-			out.RawByte('}')
-		}
+		(in.Bft).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
 }
@@ -1420,9 +1370,9 @@ func easyjson69c461c7DecodeCita12(in *jlexer.Lexer, out *Logs) {
 					out.Result = (out.Result)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v17 ResultLogs
-					(v17).UnmarshalEasyJSON(in)
-					out.Result = append(out.Result, v17)
+					var v15 ResultLogs
+					(v15).UnmarshalEasyJSON(in)
+					out.Result = append(out.Result, v15)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1458,11 +1408,11 @@ func easyjson69c461c7EncodeCita12(out *jwriter.Writer, in Logs) {
 		out.RawString(prefix)
 		{
 			out.RawByte('[')
-			for v18, v19 := range in.Result {
-				if v18 > 0 {
+			for v16, v17 := range in.Result {
+				if v16 > 0 {
 					out.RawByte(',')
 				}
-				(v19).MarshalEasyJSON(out)
+				(v17).MarshalEasyJSON(out)
 			}
 			out.RawByte(']')
 		}
@@ -1652,9 +1602,9 @@ func easyjson69c461c7DecodeCita14(in *jlexer.Lexer, out *Filter) {
 					out.Address = (out.Address)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v20 string
-					v20 = string(in.String())
-					out.Address = append(out.Address, v20)
+					var v18 string
+					v18 = string(in.String())
+					out.Address = append(out.Address, v18)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1675,9 +1625,9 @@ func easyjson69c461c7DecodeCita14(in *jlexer.Lexer, out *Filter) {
 					out.Topics = (out.Topics)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v21 string
-					v21 = string(in.String())
-					out.Topics = append(out.Topics, v21)
+					var v19 string
+					v19 = string(in.String())
+					out.Topics = append(out.Topics, v19)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1722,11 +1672,11 @@ func easyjson69c461c7EncodeCita14(out *jwriter.Writer, in Filter) {
 		}
 		{
 			out.RawByte('[')
-			for v22, v23 := range in.Address {
-				if v22 > 0 {
+			for v20, v21 := range in.Address {
+				if v20 > 0 {
 					out.RawByte(',')
 				}
-				out.String(string(v23))
+				out.String(string(v21))
 			}
 			out.RawByte(']')
 		}
@@ -1741,11 +1691,11 @@ func easyjson69c461c7EncodeCita14(out *jwriter.Writer, in Filter) {
 		}
 		{
 			out.RawByte('[')
-			for v24, v25 := range in.Topics {
-				if v24 > 0 {
+			for v22, v23 := range in.Topics {
+				if v22 > 0 {
 					out.RawByte(',')
 				}
-				out.String(string(v25))
+				out.String(string(v23))
 			}
 			out.RawByte(']')
 		}
@@ -1964,9 +1914,9 @@ func easyjson69c461c7DecodeCita17(in *jlexer.Lexer, out *Body) {
 					out.Transactions = (out.Transactions)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v26 ResultTransaction
-					(v26).UnmarshalEasyJSON(in)
-					out.Transactions = append(out.Transactions, v26)
+					var v24 ResultTransaction
+					(v24).UnmarshalEasyJSON(in)
+					out.Transactions = append(out.Transactions, v24)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1992,11 +1942,11 @@ func easyjson69c461c7EncodeCita17(out *jwriter.Writer, in Body) {
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v27, v28 := range in.Transactions {
-				if v27 > 0 {
+			for v25, v26 := range in.Transactions {
+				if v25 > 0 {
 					out.RawByte(',')
 				}
-				(v28).MarshalEasyJSON(out)
+				(v26).MarshalEasyJSON(out)
 			}
 			out.RawByte(']')
 		}
@@ -2026,4 +1976,121 @@ func (v *Body) UnmarshalJSON(data []byte) error {
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *Body) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjson69c461c7DecodeCita17(l, v)
+}
+func easyjson69c461c7DecodeCita18(in *jlexer.Lexer, out *Bft) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "proposal":
+			out.Proposal = string(in.String())
+		case "height":
+			out.Height = int32(in.Int32())
+		case "round":
+			out.Round = int32(in.Int32())
+		case "commit":
+			if in.IsNull() {
+				in.Skip()
+			} else {
+				in.Delim('{')
+				out.Commits = make(map[string]string)
+				for !in.IsDelim('}') {
+					key := string(in.String())
+					in.WantColon()
+					var v27 string
+					v27 = string(in.String())
+					(out.Commits)[key] = v27
+					in.WantComma()
+				}
+				in.Delim('}')
+			}
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjson69c461c7EncodeCita18(out *jwriter.Writer, in Bft) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"proposal\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Proposal))
+	}
+	{
+		const prefix string = ",\"height\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Height))
+	}
+	{
+		const prefix string = ",\"round\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Round))
+	}
+	{
+		const prefix string = ",\"commit\":"
+		out.RawString(prefix)
+		if in.Commits == nil && (out.Flags&jwriter.NilMapAsEmpty) == 0 {
+			out.RawString(`null`)
+		} else {
+			out.RawByte('{')
+			v28First := true
+			for v28Name, v28Value := range in.Commits {
+				if v28First {
+					v28First = false
+				} else {
+					out.RawByte(',')
+				}
+				out.String(string(v28Name))
+				out.RawByte(':')
+				out.String(string(v28Value))
+			}
+			out.RawByte('}')
+		}
+	}
+	out.RawByte('}')
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v Bft) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjson69c461c7EncodeCita18(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v Bft) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjson69c461c7EncodeCita18(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *Bft) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjson69c461c7DecodeCita18(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *Bft) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjson69c461c7DecodeCita18(l, v)
 }
