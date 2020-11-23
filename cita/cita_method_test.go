@@ -114,6 +114,26 @@ func TestCall(t *testing.T) {
     log.Println(*result)
 }
 
+func TestGetBlock(t *testing.T){
+    var url = "http://192.168.1.65:1337"
+    req := &Request{
+        Jsonrpc: "2.0",
+        Method: "getBlockByNumber",
+        Params: []interface{}{
+            "0x9999",
+            true,
+        },
+        Id: 1,
+    }
+
+    result := new(ResultBlock)
+    err := GetBlock(req,result,url)
+    if err != nil{
+        t.Error(err)
+    }
+    log.Println(*result)
+}
+
 //func TestBool(t *testing.T){
 //    s1 := make([]byte,0)
 //    s1 = nil

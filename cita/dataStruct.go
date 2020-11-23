@@ -93,6 +93,34 @@ type Transactions struct {
 	Content string `json:"content"`
 }
 
+//Object - 回执对象:
+//transactionHash: Data32 - 交易哈希
+//transactionIndex: Quantity - 交易 index
+//blockHash: Data32 - 交易所在块的块哈希
+//blockNumber: Quantity - 交易所在块的块高度
+//cumulativeQuotaUsed: Quantity - 块中该交易之前(包含该交易)的所有交易消耗的 quota 总量
+//quotaUsed: Quantity - 交易消耗的 quota 数量
+//contractAddress: Data20 - 如果是部署合约, 这个地址指的是新创建出来的合约地址. 否则为空
+//logs: Array - 交易产生的日志集合
+//root: Data32 - 状态树根
+//errorMessage: String 错误信息
+//
+//回执错误：
+//No transaction permission - 没有发交易权限
+//No contract permission - 没有创建合约权限
+//Not enough base quota - 基础配额 不够
+//Block quota limit reached - 达到块配额限制
+//Account quota limit reached - 达到账户配额限制
+//Out of quota - 配额不够
+//Jump position wasn't marked with JUMPDEST instruction - EVM 内部错误
+//Instruction is not supported - EVM 内部错误
+//Not enough stack elements to execute instruction - EVM 内部错误
+//Execution would exceed defined Stack Limit - EVM 内部错误
+//EVM internal error - EVM 内部错误
+//Mutable call in static context - EVM 内部错误
+//Out of bounds - EVM 内部错误
+//Reverted - EVM 内部错误，REVERTED instruction
+//
 //easyjson
 type ResultTransactionReceipt struct {
 	TransactionHash     string       `json:"transactionHash"`
@@ -157,6 +185,18 @@ type ResultTransaction struct {
 	Index       string `json:"index,omitempty'`
 }
 
+//chainId, Integer - version < 1 时的 chain_id, 用来防止重放攻击
+//chainIdV1, Quantity - version > 1 时的 chain_id
+//chainName, String - 链名称
+//operator, String - 链的运营者
+//genesisTimestamp, Integer - 创世块时间戳
+//validators, [Data20] - 验证者地址集合
+//blockInterval Integer - 出块间隔
+//tokenName, String - Token 名称
+//tokenSymbol, String - Token 标识
+//tokenAvatar, String - Token 标志
+//version, Integer - 链版本
+//economicalModel, EconomicalModel - 链经济模型
 //easyjson
 type ResultMetaData struct {
 	ChainId          int16         `json:"chainId"`

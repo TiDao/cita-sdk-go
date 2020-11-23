@@ -6,8 +6,10 @@
 *********************************************************************/
 package cita
 
+
 import(
     "unsafe"
+    "errors"
 )
 
 func byteToString(b []byte) string{
@@ -143,18 +145,18 @@ func GetBlock(req *Request,Result *ResultBlock,url string) error {
 
     reqJson,err := req.MarshalJSON()
     if err != nil{
-        return err
+        return errors.New("request error:")
     }
 
     respJson,err := Post(url,reqJson)
     if err != nil{
-        return err
+        return errors.New("Post request error:")
     }
 
     var response = &Response{}
     err = response.UnmarshalJSON(respJson)
     if err != nil{
-        return err
+        return errors.New("Unmarshal response result error:")
     }
 
     err = Result.UnmarshalJSON(response.Result)
