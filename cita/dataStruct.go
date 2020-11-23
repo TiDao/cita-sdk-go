@@ -55,28 +55,28 @@ type Error struct {
 
 //easyjson
 type ResultBlock struct {
-	Version string `json:"version"`
+	Version int16 `json:"version"`
 	Hash    string `json:"hash"`
-	Header  Header `json:"hearder"`
-	Body    Body   `json:"header"`
+	Header  Header `json:"header"`
+	Body    Body   `json:"body"`
 }
 
 //easyjson
 type Header struct {
 	Timestamp        time.Duration `json:"timestamp"`
-	PreHash          string        `json:"preHash"`
+	PrevHash         string        `json:"prevHash"`
 	StateRoot        string        `json:"stateRoot"`
 	TransactionsRoot string        `json:"transactionsRoot"`
 	ReceiptsRoot     string        `json:"receiptsRoot"`
 	QuotaUsed        string        `json:"quotaUsed"`
-	number           string        `json:"number"`
-	Proposer         string        `json:"propose"`
-	Proof            Proof           `json:"proof"`
+	Number           string        `json:"number"`
+	Proposer         string        `json:"proposer"`
+	Proof            Proof         `json:"proof"`
 }
 
-//easysjon
+//easyjson
 type Proof struct{
-    Bft  Bft `json:"Bft,omitempty"`
+    Bft  Bft `json:"Bft"`
 }
 
 //easyjson
@@ -84,7 +84,7 @@ type  Bft struct {
         Proposal string            `json:"proposal"`
 	    Height   int32             `json:"height"`
 	    Round    int32             `json:"round"`
-	    Commits  map[string]string `json:"commit"`
+	    Commits  map[string]string `json:"commits"`
 }
 
 //easyjson

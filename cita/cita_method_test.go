@@ -120,7 +120,7 @@ func TestGetBlock(t *testing.T){
         Jsonrpc: "2.0",
         Method: "getBlockByNumber",
         Params: []interface{}{
-            "0x9999",
+            "0xF9",
             true,
         },
         Id: 1,

@@ -977,12 +977,12 @@ func easyjson69c461c7DecodeCita8(in *jlexer.Lexer, out *ResultBlock) {
 		}
 		switch key {
 		case "version":
-			out.Version = string(in.String())
+			out.Version = int16(in.Int16())
 		case "hash":
 			out.Hash = string(in.String())
-		case "hearder":
-			(out.Header).UnmarshalEasyJSON(in)
 		case "header":
+			(out.Header).UnmarshalEasyJSON(in)
+		case "body":
 			(out.Body).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
@@ -1001,7 +1001,7 @@ func easyjson69c461c7EncodeCita8(out *jwriter.Writer, in ResultBlock) {
 	{
 		const prefix string = ",\"version\":"
 		out.RawString(prefix[1:])
-		out.String(string(in.Version))
+		out.Int16(int16(in.Version))
 	}
 	{
 		const prefix string = ",\"hash\":"
@@ -1009,12 +1009,12 @@ func easyjson69c461c7EncodeCita8(out *jwriter.Writer, in ResultBlock) {
 		out.String(string(in.Hash))
 	}
 	{
-		const prefix string = ",\"hearder\":"
+		const prefix string = ",\"header\":"
 		out.RawString(prefix)
 		(in.Header).MarshalEasyJSON(out)
 	}
 	{
-		const prefix string = ",\"header\":"
+		const prefix string = ",\"body\":"
 		out.RawString(prefix)
 		(in.Body).MarshalEasyJSON(out)
 	}
@@ -1299,9 +1299,8 @@ func easyjson69c461c7EncodeCita11(out *jwriter.Writer, in Proof) {
 	out.RawByte('{')
 	first := true
 	_ = first
-	if true {
+	{
 		const prefix string = ",\"Bft\":"
-		first = false
 		out.RawString(prefix[1:])
 		(in.Bft).MarshalEasyJSON(out)
 	}
@@ -1469,8 +1468,8 @@ func easyjson69c461c7DecodeCita13(in *jlexer.Lexer, out *Header) {
 		switch key {
 		case "timestamp":
 			out.Timestamp = time.Duration(in.Int64())
-		case "preHash":
-			out.PreHash = string(in.String())
+		case "prevHash":
+			out.PrevHash = string(in.String())
 		case "stateRoot":
 			out.StateRoot = string(in.String())
 		case "transactionsRoot":
@@ -1479,7 +1478,9 @@ func easyjson69c461c7DecodeCita13(in *jlexer.Lexer, out *Header) {
 			out.ReceiptsRoot = string(in.String())
 		case "quotaUsed":
 			out.QuotaUsed = string(in.String())
-		case "propose":
+		case "number":
+			out.Number = string(in.String())
+		case "proposer":
 			out.Proposer = string(in.String())
 		case "proof":
 			(out.Proof).UnmarshalEasyJSON(in)
@@ -1503,9 +1504,9 @@ func easyjson69c461c7EncodeCita13(out *jwriter.Writer, in Header) {
 		out.Int64(int64(in.Timestamp))
 	}
 	{
-		const prefix string = ",\"preHash\":"
+		const prefix string = ",\"prevHash\":"
 		out.RawString(prefix)
-		out.String(string(in.PreHash))
+		out.String(string(in.PrevHash))
 	}
 	{
 		const prefix string = ",\"stateRoot\":"
@@ -1528,7 +1529,12 @@ func easyjson69c461c7EncodeCita13(out *jwriter.Writer, in Header) {
 		out.String(string(in.QuotaUsed))
 	}
 	{
-		const prefix string = ",\"propose\":"
+		const prefix string = ",\"number\":"
+		out.RawString(prefix)
+		out.String(string(in.Number))
+	}
+	{
+		const prefix string = ",\"proposer\":"
 		out.RawString(prefix)
 		out.String(string(in.Proposer))
 	}
@@ -2002,7 +2008,7 @@ func easyjson69c461c7DecodeCita18(in *jlexer.Lexer, out *Bft) {
 			out.Height = int32(in.Int32())
 		case "round":
 			out.Round = int32(in.Int32())
-		case "commit":
+		case "commits":
 			if in.IsNull() {
 				in.Skip()
 			} else {
@@ -2048,7 +2054,7 @@ func easyjson69c461c7EncodeCita18(out *jwriter.Writer, in Bft) {
 		out.Int32(int32(in.Round))
 	}
 	{
-		const prefix string = ",\"commit\":"
+		const prefix string = ",\"commits\":"
 		out.RawString(prefix)
 		if in.Commits == nil && (out.Flags&jwriter.NilMapAsEmpty) == 0 {
 			out.RawString(`null`)
