@@ -9,6 +9,7 @@ package cita
 import "testing"
 import "log"
 import "strconv"
+//import "time"
 
 func hex2int(val string) int{
     n,err := strconv.ParseUint(val,16,32)
@@ -120,19 +121,26 @@ func TestGetBlock(t *testing.T){
         Jsonrpc: "2.0",
         Method: "getBlockByNumber",
         Params: []interface{}{
-            "0xF9",
+            "",
             true,
         },
         Id: 1,
     }
-
     result := new(ResultBlock)
 
-    err := GetBlock(req,result,url)
-    if err != nil{
-        t.Error(err)
+
+    for i := 0x0;i<100000;i++{
+        req.Params[0] = "0x"+strconv.FormatInt(int64(i),16) 
+        log.Printf("the block height is %s",req.Params[0])
+        err := GetBlock(req,result,url)
+        if err != nil{
+            t.Error(err)
+        }
+        if len(result.Body.Transactions) != 0 {
+            log.Println(*result)
+        }
+//        time.Sleep(time.Second)
     }
-    log.Println(*result)
 }
 
 //func TestBool(t *testing.T){
