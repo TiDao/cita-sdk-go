@@ -37,15 +37,22 @@ func TestGetBlock(){
             for {
                 req.Params[0] = <-ch
                 log.Printf("the block height is %s",req.Params[0])
-                err := cita.GetBlock(req,result,url)
+                Error,err := cita.GetBlock(req,result,url)
                 if err != nil{
                     log.Panic(err)
                 }
-                if len(result.Body.Transactions) != 0 {
-                    for _,Transaction := range result.Body.Transactions{
-                        TransactionCh <- Transaction.Hash
+                if Error.Code == 0 {
+                    if len(result.Body.Transactions) != 0 {
+                        for _,Transaction := range result.Body.Transactions{
+                            TransactionCh <- Transaction.Hash
+                        }
                     }
                 }
+                //if len(result.Body.Transactions) != 0 {
+                //    for _,Transaction := range result.Body.Transactions{
+                //        TransactionCh <- Transaction.Hash
+                //    }
+                //}
             }
         }()
     }
@@ -63,7 +70,7 @@ func TestGetBlock(){
         result := &cita.ResultTransaction{}
         for {
             req.Params[0] = <-TransactionCh
-            err := cita.GetTransaction(req,result,url)
+            _,err := cita.GetTransaction(req,result,url)
             if err != nil{
                 log.Panic(err)
             }

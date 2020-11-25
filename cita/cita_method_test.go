@@ -31,7 +31,7 @@ func TestPeerCount(t *testing.T){
     }
 
     var result =new(string)
-    err := PeerCount(req,result,url)
+    _,err := PeerCount(req,result,url)
     if err != nil{
         t.Error(err)
     }
@@ -49,7 +49,7 @@ func TestPeersInfo(t *testing.T){
     }
 
     var result =new(ResultPeerInfo)
-    err := PeersInfo(req,result,url)
+    _,err := PeersInfo(req,result,url)
     if err != nil{
         t.Error(err)
     }
@@ -68,7 +68,7 @@ func TestGetLogs(t *testing.T){
     }
 
     var result =new([]ResultLogs)
-    err := GetLogs(req,result,url)
+    _,err := GetLogs(req,result,url)
     if err != nil{
         t.Error(err)
     }
@@ -86,7 +86,7 @@ func TestBlockNumber(t *testing.T){
     }
 
     var result =new(string)
-    err := BlockNumber(req,result,url)
+    _,err := BlockNumber(req,result,url)
     if err != nil{
         t.Error(err)
     }
@@ -108,7 +108,7 @@ func TestCall(t *testing.T) {
          Id: 1,
     }
     result := new(string)
-    err := Call(req,result,url)
+    _,err := Call(req,result,url)
     if err != nil{
         t.Error(err)
     }
@@ -126,43 +126,24 @@ func TestGetBlock(t *testing.T){
         },
         Id: 1,
     }
-    result := new(ResultBlock)
 
-
+    result := &ResultBlock{}
+    //response := Error{}
     for i := 0x0;i<100000;i++{
         req.Params[0] = "0x"+strconv.FormatInt(int64(i),16) 
         log.Printf("the block height is %s",req.Params[0])
-        err := GetBlock(req,result,url)
+        response,err := GetBlock(req,result,url)
         if err != nil{
             t.Error(err)
         }
-        if len(result.Body.Transactions) != 0 {
-            log.Println(*result)
+
+        if len(response.Message) == 0{
+            if len(result.Body.Transactions) != 0 {
+                log.Println(*result)
+            }
+        }else{
+            log.Println(response)
         }
-//        time.Sleep(time.Second)
     }
 }
 
-//func TestBool(t *testing.T){
-//    s1 := make([]byte,0)
-//    s1 = nil
-//    test := Bool(s1)
-//
-//    log.Println(test)
-//}
-
-//func BenchmarkPeerCount(b *testing.B){
-//    var url = "http://192.168.1.65:1337"
-//    req := &Request{
-//         Jsonrpc: "2.0",
-//         Method: "peerCount",
-//         Params: []interface{}{},
-//         Id: 1,
-//    }
-//
-//    var result = new(string)
-//    for i:=0;i<b.N;i++{
-//        _ = PeerCount(req,result,url) 
-//    }
-//
-//}
