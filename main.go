@@ -21,7 +21,7 @@ func TestGetBlock(){
             ch <- "0x"+strconv.FormatInt(int64(i),16)
         }
     }()
-    for i:=0;i<20;i++{
+    for i:=0;i<30;i++{
         wg.Add(1)
         req := &cita.Request{
             Jsonrpc: "2.0",
@@ -35,8 +35,8 @@ func TestGetBlock(){
         result := new(cita.ResultBlock)
         go func(){
             for {
-                req.Params[0] = <-ch 
-                //log.Printf("the block height is %s",req.Params[0])
+                req.Params[0] = <-ch
+                log.Printf("the block height is %s",req.Params[0])
                 err := cita.GetBlock(req,result,url)
                 if err != nil{
                     log.Panic(err)
