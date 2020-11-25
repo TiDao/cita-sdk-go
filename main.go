@@ -11,7 +11,7 @@ import "./cita"
 import "io"
 import "sync"
 import "time"
-import "strings"
+//import "strings"
 
 func TestGetBlock(){
     var url = "http://192.168.1.65:1337"
@@ -48,7 +48,6 @@ func TestGetBlock(){
             if blockNumber != temp{
                 temp = blockNumber
                 ch <- temp
-                log.Println(blockNumber)
             }
             time.Sleep(time.Second*1)
         }

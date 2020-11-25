@@ -9,6 +9,7 @@ package cita
 
 import(
     "unsafe"
+//    "log"
 )
 
 
@@ -22,7 +23,8 @@ func (Err *errString)Error() string{
 }
 
 func byteToString(b []byte) string{
-    return *(*string)(unsafe.Pointer(&b))
+    str := string(b[1:len(b)-1])
+    return str
 }
 
 func byteToBool(b []byte) bool{
