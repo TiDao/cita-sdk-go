@@ -10,7 +10,7 @@ import "./cita"
 //import "strconv"
 import "io"
 import "sync"
-import "time"
+//import "time"
 //import "strings"
 
 func TestGetBlock(){
@@ -39,7 +39,6 @@ func TestGetBlock(){
         for {
             Error,err = cita.BlockNumber(req,&blockNumber,url)
 
-
             if err != nil || Error.Code != 0 {
                 log.Println(err)
                 log.Println(Error)
@@ -49,7 +48,7 @@ func TestGetBlock(){
                 temp = blockNumber
                 ch <- temp
             }
-            time.Sleep(time.Second*1)
+            //time.Sleep(time.Second*1)
         }
     }()
     for i:=0;i<30;i++{
@@ -68,9 +67,9 @@ func TestGetBlock(){
             for {
                 req.Params[0] = <-ch
                 log.Printf("the block height is %s",req.Params[0])
-                log.Println(req)
+                //log.Println(req)
                 Error,err := cita.GetBlock(req,result,url)
-                log.Println(result)
+                //log.Println(result)
                 if err != nil{
                     if err == io.EOF{
                         log.Printf("the err is EOF")

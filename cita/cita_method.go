@@ -66,8 +66,9 @@ func PeerCount(req *Request,Result *string,url string) (Error,error) {
         return response.Error,err
     }
 
-    *Result = byteToString(response.Result)
-
+    if len(response.Result) > 2{
+        *Result = byteToString(response.Result)
+    }
     return response.Error,nil
 }
 
@@ -78,7 +79,9 @@ func Call(req *Request,Result *string,url string) (Error,error) {
         return response.Error,err
     }
 
-    *Result = byteToString(response.Result)
+    if len(response.Result) > 2{
+        *Result = byteToString(response.Result)
+    }
 
     return response.Error,nil
 }
@@ -89,7 +92,9 @@ func BlockNumber(req *Request,Result *string,url string) (Error,error) {
         return response.Error,err
     }
 
-    *Result = byteToString(response.Result)
+    if len(response.Result) > 2{
+        *Result = byteToString(response.Result)
+    }
 
     return response.Error,nil
 }
@@ -186,7 +191,9 @@ func GetBalance(req *Request,Result *string,url string) (Error,error) {
         return response.Error,err
     }
 
-    *Result = byteToString(response.Result)
+    if len(response.Result) > 2{
+        *Result = byteToString(response.Result)
+    }
 
     return response.Error,nil
 }
@@ -198,7 +205,9 @@ func NewFilter(req *Request,Result *string,url string) (Error,error) {
         return response.Error,err
     }
 
-    *Result = byteToString(response.Result)
+    if len(response.Result) > 2{
+        *Result = byteToString(response.Result)
+    }
 
     return response.Error,nil
 }
@@ -210,7 +219,9 @@ func NewBlockFilter(req *Request,Result *string,url string) (Error,error) {
         return response.Error,err
     }
 
-    *Result = byteToString(response.Result)
+    if len(response.Result) > 2{
+        *Result = byteToString(response.Result)
+    }
 
     return response.Error,nil
 }
@@ -222,7 +233,9 @@ func UninstallFilter(req *Request,Result *bool,url string) (Error,error) {
         return response.Error,err
     }
 
-    *Result = byteToBool(response.Result)
+    if len(response.Result) > 0{
+        *Result = byteToBool(response.Result)
+    }
 
     return response.Error,nil
 }
@@ -274,7 +287,9 @@ func GetTransactionProof(req *Request,Result *string,url string) (Error,error) {
         return response.Error,err
     }
 
-    *Result = byteToString(response.Result)
+    if len(response.Result) > 2{
+        *Result = byteToString(response.Result)
+    }
 
     return response.Error,nil
 }
@@ -286,7 +301,9 @@ func GetBlockHeader(req *Request,Result *string,url string) (Error,error) {
         return response.Error,err
     }
 
-    *Result = byteToString(response.Result)
+    if len(response.Result) > 2{
+        *Result = byteToString(response.Result)
+    }
 
     return response.Error,nil
 }
@@ -298,7 +315,9 @@ func GetStateProof(req *Request,Result *string,url string) (Error,error) {
         return response.Error,err
     }
 
-    *Result = byteToString(response.Result)
+    if len(response.Result) > 2{
+        *Result = byteToString(response.Result)
+    }
 
     return response.Error,nil
 }
@@ -310,7 +329,9 @@ func GetStorageAt(req *Request,Result *string,url string) (Error,error) {
         return response.Error,err
     }
 
-    *Result = byteToString(response.Result)
+    if len(response.Result) > 2{
+        *Result = byteToString(response.Result)
+    }
 
     return response.Error,nil
 }
