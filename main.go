@@ -19,9 +19,9 @@ func TestGetBlock() {
 	var wg sync.WaitGroup
 	ch := make(chan string, 20)
 	TransactionCh := make(chan string, 20)
-	go getNumber(ch, url, "0x0")
+	go getNumber(ch, url, "0x9d59c")
 
-	for i := 0; i < 8; i++ {
+	for i := 0; i < 20; i++ {
 		wg.Add(1)
 		req := &cita.Request{
 			Jsonrpc: "2.0",
@@ -32,9 +32,9 @@ func TestGetBlock() {
 			},
 			Id: int32(i),
 		}
-		result := new(cita.ResultBlock)
-        var goRun bool = true
 		go func() {
+		    result := new(cita.ResultBlock)
+            var goRun bool = true
 			for {
                 if goRun {
 				    req.Params[0] = <-ch
