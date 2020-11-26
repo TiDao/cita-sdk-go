@@ -32,7 +32,7 @@ func TestGetBlock() {
 			},
 			Id: int32(i),
 		}
-		go func() {
+        go func() {
             result := new(cita.ResultBlock)
             var goRun bool = true
             for {
