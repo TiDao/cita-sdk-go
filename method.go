@@ -13,7 +13,6 @@ import "time"
 
 //import "strings"
 
-
 //func getNumber() 获取链上的最新块高，
 //比对当前读取到额块高和最新块高，
 //如果有差值就将其传递到channel中
@@ -30,9 +29,9 @@ func getNumber(ch chan string, url string, startNumber string) {
 	}
 	var Error cita.Error //增加了prefix的error类型
 	var err error
-	var latestNumber string  //获取的最新块高
+	var latestNumber string //获取的最新块高
 
-    //将startNumber转换为Int64类型
+	//将startNumber转换为Int64类型
 	startNumberInt, err := strconv.ParseInt(startNumber[2:], 16, 64)
 	if err != nil {
 		log.Println("change startNumber to Int64 failed,", err)
@@ -50,14 +49,13 @@ func getNumber(ch chan string, url string, startNumber string) {
 			log.Println("change latestNumber to Int64 failed,", err)
 		}
 
-        //尽快传递与最新块高间的差值
+		//尽快传递与最新块高间的差值
 		for startNumberInt < latestNumberInt {
 			ch <- "0x" + strconv.FormatInt(startNumberInt+1, 16)
 			startNumberInt = startNumberInt + 1
 		}
 
-        //控制链请求次数查询次数
+		//控制链请求次数查询次数
 		time.Sleep(time.Second * 1)
 	}
 }
-

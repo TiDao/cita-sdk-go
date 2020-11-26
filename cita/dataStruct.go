@@ -11,9 +11,9 @@ import (
 	"time"
 )
 
-
 type Bool bool
 type String string
+
 //requst body type
 //easyjson
 type Request struct {
@@ -55,7 +55,7 @@ type Error struct {
 
 //easyjson
 type ResultBlock struct {
-	Version int16 `json:"version"`
+	Version int16  `json:"version"`
 	Hash    string `json:"hash"`
 	Header  Header `json:"header"`
 	Body    Body   `json:"body"`
@@ -75,16 +75,16 @@ type Header struct {
 }
 
 //easyjson
-type Proof struct{
-    Bft  Bft `json:"Bft"`
+type Proof struct {
+	Bft Bft `json:"Bft"`
 }
 
 //easyjson
-type  Bft struct {
-        Proposal string            `json:"proposal"`
-	    Height   int32             `json:"height"`
-	    Round    int32             `json:"round"`
-	    Commits  map[string]string `json:"commits"`
+type Bft struct {
+	Proposal string            `json:"proposal"`
+	Height   int32             `json:"height"`
+	Round    int32             `json:"round"`
+	Commits  map[string]string `json:"commits"`
 }
 
 //easyjson
@@ -142,10 +142,10 @@ type ResultTransactionReceipt struct {
 
 //easyjson
 type Logs struct {
-	Id      int32           `json:"id"`
-	Jsonrpc string          `json:"jsonrpc"`
-	Result  []ResultLogs    `json:"result,omitempty"`
-	Error   Error           `json:"error,omitempty"`
+	Id      int32        `json:"id"`
+	Jsonrpc string       `json:"jsonrpc"`
+	Result  []ResultLogs `json:"result,omitempty"`
+	Error   Error        `json:"error,omitempty"`
 }
 
 //easyjson
@@ -160,7 +160,6 @@ type ResultLogs struct {
 	LogIndex            string   `json:"logIndex"`
 	TransactionLogIndex string   `json:"transactionLogIndex"`
 }
-
 
 //easyjson
 type ResultPeerInfo struct {

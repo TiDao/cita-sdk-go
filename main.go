@@ -8,6 +8,7 @@ package main
 
 import "log"
 import "./cita"
+
 //import "io"
 import "sync"
 
@@ -32,23 +33,23 @@ func TestGetBlock() {
 			},
 			Id: int32(i),
 		}
-        go func() {
-            result := new(cita.ResultBlock)
-            var goRun bool = true
-            for {
-                if goRun {
-                    req.Params[0] = <-ch
-                }
+		go func() {
+			result := new(cita.ResultBlock)
+			var goRun bool = true
+			for {
+				if goRun {
+					req.Params[0] = <-ch
+				}
 
-                Error, err := cita.GetBlock(req, result, url)
+				Error, err := cita.GetBlock(req, result, url)
 				log.Printf("the block height is %s ", req.Params[0])
-                //log.Printf("the result is %v\n\n",result)
+				//log.Printf("the result is %v\n\n",result)
 				if err != nil {
-					log.Println("TestGetBlock() error,cita.GetBlock() error,",err)
-                    goRun = false
-				}else{
-                    goRun = true
-                }
+					log.Println("TestGetBlock() error,cita.GetBlock() error,", err)
+					goRun = false
+				} else {
+					goRun = true
+				}
 				if Error.Code == 0 {
 					if len(result.Body.Transactions) != 0 {
 						for _, Transaction := range result.Body.Transactions {
@@ -73,18 +74,18 @@ func TestGetBlock() {
 		}
 
 		result := &cita.ResultTransaction{}
-        var goRun = true
+		var goRun = true
 		for {
-            if goRun{
-			    req.Params[0] = <-TransactionCh
-            }
+			if goRun {
+				req.Params[0] = <-TransactionCh
+			}
 			_, err := cita.GetTransaction(req, result, url)
 			if err != nil {
-				log.Println("TestGetBlock() error,cita.GetTransaction() error,",err)
-                goRun = false
-			}else{
-                goRun = true
-            }
+				log.Println("TestGetBlock() error,cita.GetTransaction() error,", err)
+				goRun = false
+			} else {
+				goRun = true
+			}
 			log.Printf("hash: %s", result.Hash)
 			log.Printf("content: %s", result.Content)
 			log.Printf("from: %s\n", result.From)
