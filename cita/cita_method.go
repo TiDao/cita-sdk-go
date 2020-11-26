@@ -63,54 +63,66 @@ func PeerCount(req *Request,Result *string,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     if len(response.Result) > 2{
         *Result = byteToString(response.Result)
     }
-    return response.Error,nil
+    if response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func Call(req *Request,Result *string,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     if len(response.Result) > 2{
         *Result = byteToString(response.Result)
     }
 
-    return response.Error,nil
+    if response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 func BlockNumber(req *Request,Result *string,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     if len(response.Result) > 2{
         *Result = byteToString(response.Result)
     }
 
-    return response.Error,nil
+    if response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func PeersInfo(req *Request,Result *ResultPeerInfo,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     errResult := Result.UnmarshalJSON(response.Result)
     if errResult != nil{
-        return response.Error,errResult
+        return Error{},errResult
     }
-    return response.Error,nil
+    if response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 
@@ -118,28 +130,34 @@ func GetVersion(req *Request,Result *ResultVersion,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     errResult := Result.UnmarshalJSON(response.Result)
     if errResult != nil{
-        return response.Error,errResult
+        return Error{},errResult
     }
-    return response.Error,nil
+    if response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func GetBlock(req *Request,Result *ResultBlock,url string) (Error,error) {
-    
+
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     errResult := Result.UnmarshalJSON(response.Result)
     if errResult != nil{
-        return response.Error,errResult
+        return Error{},errResult
     }
-    return response.Error,nil
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func GetLogs(req *Request,Result *[]ResultLogs,url string) (Error,error){
@@ -174,83 +192,101 @@ func GetTransaction(req *Request,Result *ResultTransaction,url string) (Error,er
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     errResult := Result.UnmarshalJSON(response.Result)
     if errResult != nil{
-        return response.Error,errResult
+        return Error{},errResult
     }
-    return response.Error,nil
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func GetBalance(req *Request,Result *string,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     if len(response.Result) > 2{
         *Result = byteToString(response.Result)
     }
 
-    return response.Error,nil
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func NewFilter(req *Request,Result *string,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     if len(response.Result) > 2{
         *Result = byteToString(response.Result)
     }
 
-    return response.Error,nil
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func NewBlockFilter(req *Request,Result *string,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     if len(response.Result) > 2{
         *Result = byteToString(response.Result)
     }
 
-    return response.Error,nil
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func UninstallFilter(req *Request,Result *bool,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     if len(response.Result) > 0{
         *Result = byteToBool(response.Result)
     }
 
-    return response.Error,nil
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func GetFilterChanges(req *Request,Result *[]string,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
     //*Result = byteToString(response.Result)
     for i,results := range response.Result {
         (*Result)[i] = *(*string)(unsafe.Pointer(&results))
     }
-    return response.Error,nil
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func GetFilterLogs(req *Request,Result *[]ResultLogs,url string) (Error,error) {
@@ -275,78 +311,95 @@ func GetFilterLogs(req *Request,Result *[]ResultLogs,url string) (Error,error) {
     if err != nil{
         Err.prefix = "Unmarshal response  error "
         Err.err = err
-        return response.Error,Err
+        return Error{},Err
     }
-    return response.Error,nil
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func GetTransactionProof(req *Request,Result *string,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     if len(response.Result) > 2{
         *Result = byteToString(response.Result)
     }
 
-    return response.Error,nil
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func GetBlockHeader(req *Request,Result *string,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     if len(response.Result) > 2{
         *Result = byteToString(response.Result)
     }
 
-    return response.Error,nil
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func GetStateProof(req *Request,Result *string,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     if len(response.Result) > 2{
         *Result = byteToString(response.Result)
     }
 
-    return response.Error,nil
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func GetStorageAt(req *Request,Result *string,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     if len(response.Result) > 2{
         *Result = byteToString(response.Result)
     }
 
-    return response.Error,nil
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
 
 func GetMetaData(req *Request,Result *ResultMetaData,url string) (Error,error) {
 
     response,err := responseUnmarshal(req,&url)
     if err != nil{
-        return response.Error,err
+        return Error{},err
     }
 
     errResult := Result.UnmarshalJSON(response.Result)
     if errResult != nil{
         return response.Error,errResult
     }
-    return response.Error,nil
-
+    if  response.Error.Code != 0{
+        return response.Error,nil
+    }
+    return Error{},nil
 }
