@@ -79,7 +79,7 @@ func TestGetBlock() {
 			req.Params[0] = <-TransactionCh
 			_, err := cita.GetTransaction(req, result, url)
 			if err != nil {
-				log.Panic(err)
+				log.Println("TestGetBlock() error,cita.GetTransaction() error,",err)
 			}
 			log.Printf("hash: %s", result.Hash)
 			log.Printf("content: %s", result.Content)
