@@ -8,7 +8,7 @@ package main
 
 import "log"
 import "./cita"
-import "io"
+//import "io"
 import "sync"
 
 //import "strings"
@@ -21,7 +21,7 @@ func TestGetBlock() {
 	TransactionCh := make(chan string, 20)
 	go getNumber(ch, url, "0x0")
 
-	for i := 0; i < 50; i++ {
+	for i := 0; i < 8; i++ {
 		wg.Add(1)
 		req := &cita.Request{
 			Jsonrpc: "2.0",
@@ -33,20 +33,22 @@ func TestGetBlock() {
 			Id: int32(i),
 		}
 		result := new(cita.ResultBlock)
+        var goRun bool = true
 		go func() {
 			for {
-				req.Params[0] = <-ch
-				//log.Println(req)
+                if goRun {
+				    req.Params[0] = <-ch
+                }
+
                 Error, err := cita.GetBlock(req, result, url)
 				log.Printf("the block height is %s ", req.Params[0])
-                log.Printf("the result is %v",result)
+                log.Printf("the result is %v\n\n",result)
 				if err != nil {
-					if err == io.EOF {
-						log.Printf("the err is EOF")
-					} else {
-						log.Println("TestGetBlock() error,cita.GetBlock() error,",err)
-					}
-				}
+					log.Println("TestGetBlock() error,cita.GetBlock() error,",err)
+                    goRun = false
+				}else{
+                    goRun = true
+                }
 				if Error.Code == 0 {
 					if len(result.Body.Transactions) != 0 {
 						for _, Transaction := range result.Body.Transactions {
@@ -56,10 +58,6 @@ func TestGetBlock() {
 				} else {
 					log.Println("get Block error:", Error)
 				}
-				//if len(result.Body.Transactions) != 0 {
-				//    for _,Transaction := range result.Body.Transactions{ //        TransactionCh <- Transaction.Hash
-				//    }
-				//}
 			}
 		}()
 	}
@@ -75,12 +73,18 @@ func TestGetBlock() {
 		}
 
 		result := &cita.ResultTransaction{}
+        var goRun = true
 		for {
-			req.Params[0] = <-TransactionCh
+            if goRun{
+			    req.Params[0] = <-TransactionCh
+            }
 			_, err := cita.GetTransaction(req, result, url)
 			if err != nil {
 				log.Println("TestGetBlock() error,cita.GetTransaction() error,",err)
-			}
+                goRun = false
+			}else{
+                goRun = true
+            }
 			log.Printf("hash: %s", result.Hash)
 			log.Printf("content: %s", result.Content)
 			log.Printf("from: %s\n", result.From)
