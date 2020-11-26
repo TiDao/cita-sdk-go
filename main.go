@@ -42,7 +42,7 @@ func TestGetBlock() {
 
                 Error, err := cita.GetBlock(req, result, url)
 				log.Printf("the block height is %s ", req.Params[0])
-                log.Printf("the result is %v\n\n",result)
+                //log.Printf("the result is %v\n\n",result)
 				if err != nil {
 					log.Println("TestGetBlock() error,cita.GetBlock() error,",err)
                     goRun = false
