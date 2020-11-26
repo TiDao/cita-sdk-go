@@ -33,11 +33,11 @@ func TestGetBlock() {
 			Id: int32(i),
 		}
 		go func() {
-		    result := new(cita.ResultBlock)
+            result := new(cita.ResultBlock)
             var goRun bool = true
-			for {
+            for {
                 if goRun {
-				    req.Params[0] = <-ch
+                    req.Params[0] = <-ch
                 }
 
                 Error, err := cita.GetBlock(req, result, url)
