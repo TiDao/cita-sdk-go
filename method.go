@@ -36,12 +36,12 @@ func getNumber(ch chan string, url string, startNumber string) {
 	if err != nil {
 		log.Println("change startNumber to Int64 failed,", err)
 	}
+	startNumberInt = startNumberInt + 1
 
 	for {
 		Error, err = cita.BlockNumber(req, &latestNumber, url)
 		if err != nil || Error.Code != 0 {
-			log.Println(err)
-			log.Println(Error)
+            log.Printf("get blockNumber the Error is %v,the err is %s",Error,err.Error())
 		}
 
 		latestNumberInt, err := strconv.ParseInt(latestNumber[2:], 16, 64)
@@ -50,8 +50,8 @@ func getNumber(ch chan string, url string, startNumber string) {
 		}
 
 		//尽快传递与最新块高间的差值
-		for startNumberInt < latestNumberInt {
-			ch <- "0x" + strconv.FormatInt(startNumberInt+1, 16)
+		for startNumberInt < latestNumberInt-1{
+			ch <- "0x" + strconv.FormatInt(startNumberInt, 16)
 			startNumberInt = startNumberInt + 1
 		}
 

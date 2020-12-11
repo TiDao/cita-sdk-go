@@ -11,13 +11,16 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	//"time"
+	"time"
 	//"strconv"
 )
 
 func Post(url string, input []byte) ([]byte, error) {
 
-	var client = &http.Client{}
+	var client = &http.Client{
+        Timeout: 60 * time.Second,
+    }
+    //defer client.CloseIdleConnections()
 	reader := bytes.NewReader(input)
 	request, err := http.NewRequest("POST", url, reader)
 	if err != nil {
@@ -31,7 +34,13 @@ func Post(url string, input []byte) ([]byte, error) {
 	request.Header.Set("Content-Type", "application/json")
 	//request.Header.Set("Timestamp",t)
 
+    //begin := time.Now()
 	response, err := client.Do(request)
+    //if int64(time.Since(begin)) > int64(time.Microsecond*100000) {
+    //  log.Println(int64(time.Since(begin)))
+    //  log.Println(int64(time.Microsecond * 1000))
+    //  log.Println("time:", time.Since(begin))
+    //}
 	if err != nil {
 		log.Println(err.Error())
 		return nil, err
@@ -40,6 +49,8 @@ func Post(url string, input []byte) ([]byte, error) {
 	responseBody, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		log.Println(err.Error())
+        log.Println("response.Status:",response.Status)
+        log.Println("response.Header:",response.Header)
 		return nil, err
 	}
 
@@ -49,6 +60,7 @@ func Post(url string, input []byte) ([]byte, error) {
 func Get(url string) ([]byte, error) {
 
 	var client = &http.Client{}
+    defer client.CloseIdleConnections()
 
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {

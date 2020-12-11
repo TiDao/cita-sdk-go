@@ -12,37 +12,52 @@ import "./cita"
 //import "io"
 import "sync"
 
+import "time"
+ 
 //import "strings"
 
 func TestGetBlock() {
-	var url = "http://192.168.1.65:1337"
-
+    //var url = "http://172.16.0.49:1337"
+    //var url = "http://192.168.1.87:30000"
+    //var url = "http://192.168.1.67:8083"
+    var url = "http://192.168.1.243:8081" 
+    log.Println(url)
 	var wg sync.WaitGroup
-	ch := make(chan string, 20)
-	TransactionCh := make(chan string, 20)
-	go getNumber(ch, url, "0x9d59c")
+	ch := make(chan string, 50)
+	TransactionCh := make(chan string, 50)
+	go getNumber(ch, url, "0x0")
 
-	for i := 0; i < 20; i++ {
+	for i := 0; i < 200; i++ {
 		wg.Add(1)
 		req := &cita.Request{
 			Jsonrpc: "2.0",
 			Method:  "getBlockByNumber",
 			Params: []interface{}{
 				"",
-				true,
+				false,
 			},
 			Id: int32(i),
 		}
+
+		var Error cita.Error
+		var err error
 		go func() {
-			result := new(cita.ResultBlock)
+			result := new(cita.ResultBlockFalse)
+			log.SetFlags(log.Lmicroseconds)
 			var goRun bool = true
 			for {
+                //timeout := time.NewTimer(time.Microsecond*500)
 				if goRun {
-					req.Params[0] = <-ch
+                    req.Params[0] = <-ch
+				    log.Printf("the block height is %s ", req.Params[0])
 				}
 
-				Error, err := cita.GetBlock(req, result, url)
-				log.Printf("the block height is %s ", req.Params[0])
+                begin := time.Now()
+				Error, err = cita.GetBlockFalse(req, result, url)
+                if int64(time.Since(begin)) > int64(time.Microsecond*10000000) {
+                    log.Println(int64(time.Since(begin)))
+                    log.Println("time:",time.Since(begin))
+                }
 				//log.Printf("the result is %v\n\n",result)
 				if err != nil {
 					log.Println("TestGetBlock() error,cita.GetBlock() error,", err)
@@ -52,12 +67,13 @@ func TestGetBlock() {
 				}
 				if Error.Code == 0 {
 					if len(result.Body.Transactions) != 0 {
-						for _, Transaction := range result.Body.Transactions {
-							TransactionCh <- Transaction.Hash
+                        for _, Transaction := range result.Body.Transactions {
+                            log.Println("transaction is: ",Transaction)
+							TransactionCh <- Transaction
 						}
 					}
 				} else {
-					log.Println("get Block error:", Error)
+                    log.Println("get Block error:", Error)
 				}
 			}
 		}()
@@ -66,32 +82,37 @@ func TestGetBlock() {
 	go func() {
 		req := &cita.Request{
 			Jsonrpc: "2.0",
-			Method:  "getTransaction",
+			Method:  "getTransactionReceipt",
 			Params: []interface{}{
 				"",
 			},
 			Id: 1,
 		}
 
-		result := &cita.ResultTransaction{}
+		result := &cita.ResultTransactionReceipt{}
 		var goRun = true
 		for {
 			if goRun {
 				req.Params[0] = <-TransactionCh
 			}
-			_, err := cita.GetTransaction(req, result, url)
+			_, err := cita.GetTransactionReceipt(req, result, url)
 			if err != nil {
-				log.Println("TestGetBlock() error,cita.GetTransaction() error,", err)
+				log.Println("TestGetTransactionReceipt() error,cita.GetTransactionReceipt() error,", err)
 				goRun = false
 			} else {
 				goRun = true
 			}
-			log.Printf("hash: %s", result.Hash)
-			log.Printf("content: %s", result.Content)
-			log.Printf("from: %s\n", result.From)
-			log.Printf("blockNumber: %s\n", result.BlockNumber)
-			log.Printf("blockHash: %s\n", result.BlockHash)
-			log.Printf("index: %s\n\n\n\n", result.Index)
+
+            if len(result.Logs) > 0{
+                log.Printf("transactionReceipt.Logs.Address is:%s",result.Logs[0].Address)
+            }
+
+			//log.Printf("hash: %s", result.Hash)
+			//log.Printf("content: %s", result.Content)
+			//log.Printf("from: %s\n", result.From)
+			//log.Printf("blockNumber: %s\n", result.BlockNumber)
+			//log.Printf("blockHash: %s\n", result.BlockHash)
+			//log.Printf("index: %s\n\n\n\n", result.Index)
 		}
 	}()
 

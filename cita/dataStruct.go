@@ -54,11 +54,19 @@ type Error struct {
 }
 
 //easyjson
-type ResultBlock struct {
+type ResultBlockTrue struct {
 	Version int16  `json:"version"`
 	Hash    string `json:"hash"`
 	Header  Header `json:"header"`
-	Body    Body   `json:"body"`
+	Body    BodyTrue   `json:"body"`
+}
+
+//easyjson
+type ResultBlockFalse struct {
+	Version int16  `json:"version"`
+	Hash    string `json:"hash"`
+	Header  Header `json:"header"`
+	Body    BodyFalse   `json:"body"`
 }
 
 //easyjson
@@ -88,8 +96,13 @@ type Bft struct {
 }
 
 //easyjson
-type Body struct {
+type BodyTrue struct {
 	Transactions []ResultTransaction `json:"transactions"`
+}
+
+//easyjson
+type BodyFalse struct {
+	Transactions []string `json:"transactions"`
 }
 
 //easyjson
